@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecurityPaymentControl.Services.DataContext.Maps;
+using SecurityPaymentControl.Services.Features.Calendar;
 using SecurityPaymentControl.Services.Features.ContactInformation.Email;
 using SecurityPaymentControl.Services.Features.House;
 using SecurityPaymentControl.Services.Features.Residents;
@@ -29,7 +30,7 @@ namespace SecurityPaymentControl.Services.DataContext
             new ResidentInformationMap(modelBuilder.Entity<ResidentInformation>());
             new PhoneContactMap(modelBuilder.Entity<PhoneContact>());
             new EmailMap(modelBuilder.Entity<EmailContact>());
-            new HouseInformationMap(modelBuilder.Entity<HouseInformation>());
+            new PaymentCalendarMap(modelBuilder.Entity<PaymentCalendar>());
 
         }
 
