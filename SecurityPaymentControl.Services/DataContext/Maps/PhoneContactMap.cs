@@ -14,7 +14,6 @@ namespace SecurityPaymentControl.Services.DataContext.Maps
         {
             builder.ToTable("PhoneContact", "dbo");
             builder.HasKey(c => c.PhoneNumber);
-            builder.Property(c => c.PhoneNumber).HasMaxLength(200).IsRequired();
             builder.Property(c => c.CountryCode).HasMaxLength(200).IsRequired();
             builder.Property(c => c.ResidentId).HasColumnType("int").IsRequired();
             builder.HasOne(p => p.ResidentInformation).WithMany(b => b.PhoneContact);

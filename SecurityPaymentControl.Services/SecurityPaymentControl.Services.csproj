@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Invoice\" />
+    <Folder Include="Features\Calendar\" />
   </ItemGroup>
 
 </Project>

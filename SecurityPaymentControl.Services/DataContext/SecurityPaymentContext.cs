@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecurityPaymentControl.Services.DataContext.Maps;
+using SecurityPaymentControl.Services.Features.ContactInformation.Email;
+using SecurityPaymentControl.Services.Features.House;
 using SecurityPaymentControl.Services.Features.Residents;
 using SecurityPaymentControl.Services.Features.Residents.ContactInformation.Phone;
 using System;
@@ -15,11 +17,20 @@ namespace SecurityPaymentControl.Services.DataContext
 
         public DbSet<ResidentInformation> ResidentInformation { get; set; }
         public DbSet<PhoneContact> PhoneContact { get; set; }
+        public DbSet<EmailContact> EmailContact { get; set; }
+
+        public DbSet<HouseInformation> HouseInformation { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             new ResidentInformationMap(modelBuilder.Entity<ResidentInformation>());
+            new PhoneContactMap(modelBuilder.Entity<PhoneContact>());
+            new EmailMap(modelBuilder.Entity<EmailContact>());
+            new HouseInformationMap(modelBuilder.Entity<HouseInformation>());
+
         }
 
 

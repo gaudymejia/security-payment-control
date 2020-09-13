@@ -14,7 +14,6 @@ namespace SecurityPaymentControl.Services.DataContext.Maps
         {
             builder.ToTable("EmailContact", "dbo");
             builder.HasKey(c => c.Email);
-            builder.Property(c => c.Email).HasMaxLength(200).IsRequired();
             builder.Property(c => c.ResidentId).HasColumnType("int").IsRequired();
             builder.HasOne(p => p.ResidentInformation).WithMany(b => b.EmailContact);
         }
