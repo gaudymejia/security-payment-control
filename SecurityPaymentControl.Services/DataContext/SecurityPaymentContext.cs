@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SecurityPaymentControl.Services.DataContext.Maps;
 using SecurityPaymentControl.Services.Features.Residents;
 using SecurityPaymentControl.Services.Features.Residents.ContactInformation.Phone;
 using System;
@@ -15,13 +16,10 @@ namespace SecurityPaymentControl.Services.DataContext
         public DbSet<ResidentInformation> ResidentInformation { get; set; }
         public DbSet<PhoneContact> PhoneContact { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ResidentInformation>().ToTable("ResidentInformation");
-            modelBuilder.Entity<PhoneContact>().ToTable("PhoneContact");
-
-            modelBuilder.Entity<PhoneContact>().HasOne(p => p.ResidentInformation).WithMany(b => b.PhoneContact);
+            base.OnModelCreating(modelBuilder);
+            new ResidentInformationMap(modelBuilder.Entity<ResidentInformation>());
         }
 
 

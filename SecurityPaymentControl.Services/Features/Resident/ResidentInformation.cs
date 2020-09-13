@@ -1,4 +1,5 @@
-﻿using SecurityPaymentControl.Services.Features.Residents.ContactInformation;
+﻿using SecurityPaymentControl.Services.Features.ContactInformation.Email;
+using SecurityPaymentControl.Services.Features.Residents.ContactInformation;
 using SecurityPaymentControl.Services.Features.Residents.ContactInformation.Phone;
 using SecurityPaymentControl.Services.Helpers;
 using System;
@@ -16,9 +17,9 @@ namespace SecurityPaymentControl.Services.Features.Residents
         public int ResidentId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public int BlockNumber { get; set; }
-        public int HouseNumber { get; set; }
         public List<PhoneContact> PhoneContact { get; set; }
+        public List<EmailContact> EmailContact { get; set; }
+
 
     }
 }
