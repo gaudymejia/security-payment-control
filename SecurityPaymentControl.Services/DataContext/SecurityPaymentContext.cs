@@ -3,6 +3,7 @@ using SecurityPaymentControl.Services.DataContext.Maps;
 using SecurityPaymentControl.Services.Features.Calendar;
 using SecurityPaymentControl.Services.Features.ContactInformation.Email;
 using SecurityPaymentControl.Services.Features.House;
+using SecurityPaymentControl.Services.Features.Invoice;
 using SecurityPaymentControl.Services.Features.Residents;
 using SecurityPaymentControl.Services.Features.Residents.ContactInformation.Phone;
 using System;
@@ -22,6 +23,7 @@ namespace SecurityPaymentControl.Services.DataContext
 
         public DbSet<HouseInformation> HouseInformation { get; set; }
 
+        public DbSet<Voucher> Voucher { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +33,7 @@ namespace SecurityPaymentControl.Services.DataContext
             new PhoneContactMap(modelBuilder.Entity<PhoneContact>());
             new EmailMap(modelBuilder.Entity<EmailContact>());
             new PaymentCalendarMap(modelBuilder.Entity<PaymentCalendar>());
+            new VoucherMap(modelBuilder.Entity<Voucher>());
 
         }
 
