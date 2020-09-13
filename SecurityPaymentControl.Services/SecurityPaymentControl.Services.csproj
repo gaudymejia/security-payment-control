@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\" />
+    <Folder Include="Features\ContactInformation\Email\" />
+    <Folder Include="Features\House\" />
+    <Folder Include="Features\Invoice\" />
   </ItemGroup>
 
 </Project>
