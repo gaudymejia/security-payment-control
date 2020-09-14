@@ -17,7 +17,7 @@ namespace SecurityPaymentControl.Services.DataContext.Maps
             builder.Property(c => c.HouseId).ValueGeneratedNever();
             builder.Property(c => c.BlockNumber).HasColumnType("int").IsRequired();
             builder.Property(c => c.HouseNumber).HasColumnType("int").IsRequired();
-            builder.Property(c => c.ResidentId).HasColumnType("int").IsRequired();
+            builder.Property(c => c.ResidentId).IsRequired();
             builder.HasOne(p => p.ResidentInformation).WithMany(b => b.HouseInformation);
         }
     }

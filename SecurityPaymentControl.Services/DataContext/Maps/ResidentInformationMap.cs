@@ -14,8 +14,7 @@ namespace SecurityPaymentControl.Services.DataContext.Maps
         public  ResidentInformationMap(EntityTypeBuilder<ResidentInformation> builder)
         {
             builder.ToTable("ResidentInformation", "dbo");
-            builder.HasKey(c => c.ResidentId);
-            builder.Property(c => c.ResidentId).HasColumnType("int").IsRequired();
+            builder.HasKey(c => c.ResidentInformationId);
             builder.Property(c => c.Name).HasMaxLength(200).IsRequired();
             builder.Property(c => c.LastName).HasMaxLength(200).IsRequired();
             builder.HasMany(p => p.PhoneContact).WithOne(b => b.ResidentInformation);

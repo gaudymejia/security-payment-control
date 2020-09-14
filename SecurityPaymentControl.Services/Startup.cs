@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,13 +14,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SecurityPaymentControl.Services.DataContext;
+using SecurityPaymentControl.Services.Features.Residents;
 
 namespace SecurityPaymentControl.Services
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _env;
+        private readonly ILoggerFactory _loggerFactory;
+
+        public Startup(IHostingEnvironment env, IConfiguration configuration,
+        ILoggerFactory loggerFactory)
         {
+            _env = env;
+            _loggerFactory = loggerFactory;
             Configuration = configuration;
         }
 
@@ -27,6 +35,20 @@ namespace SecurityPaymentControl.Services
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var logger = _loggerFactory.CreateLogger<Startup>();
+
+            if (_env.IsDevelopment())
+            {
+               
+
+                logger.LogInformation("Development environment");
+            }
+            else
+            {
+                
+
+                logger.LogInformation("Environment: {EnvironmentName}", _env.EnvironmentName);
+            }
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -34,6 +56,7 @@ namespace SecurityPaymentControl.Services
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+
             services.AddDbContext<SecurityPaymentContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SecurityPaymentConnection")));
             services.Configure<CookiePolicyOptions>(options =>
             { 
@@ -41,8 +64,12 @@ namespace SecurityPaymentControl.Services
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+           
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+            services.AddScoped<ResidentInformationService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info
@@ -53,6 +80,12 @@ namespace SecurityPaymentControl.Services
                 });
 
             });
+
+           
+
+
+
+
         }
 
 

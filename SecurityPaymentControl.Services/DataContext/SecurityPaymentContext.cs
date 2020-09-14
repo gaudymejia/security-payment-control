@@ -18,22 +18,12 @@ namespace SecurityPaymentControl.Services.DataContext
         public SecurityPaymentContext(DbContextOptions<SecurityPaymentContext> options) : base(options) { }
 
         public DbSet<ResidentInformation> ResidentInformation { get; set; }
-        public DbSet<PhoneContact> PhoneContact { get; set; }
-        public DbSet<EmailContact> EmailContact { get; set; }
-
-        public DbSet<HouseInformation> HouseInformation { get; set; }
-
-        public DbSet<Voucher> Voucher { get; set; }
-
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            new ResidentInformationMap(modelBuilder.Entity<ResidentInformation>());
-            new PhoneContactMap(modelBuilder.Entity<PhoneContact>());
-            new EmailMap(modelBuilder.Entity<EmailContact>());
-            new PaymentCalendarMap(modelBuilder.Entity<PaymentCalendar>());
-            new VoucherMap(modelBuilder.Entity<Voucher>());
+           
 
         }
 
