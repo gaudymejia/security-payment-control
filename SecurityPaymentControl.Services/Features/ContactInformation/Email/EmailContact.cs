@@ -12,7 +12,7 @@ namespace SecurityPaymentControl.Services.Features.ContactInformation.Email
     {
         [Key]
         public string Email { get; set; }
-        public int ResidentId { get; set; }
+        public string ResidentId { get; set; }
 
         public ResidentInformation ResidentInformation { get; set; }
 

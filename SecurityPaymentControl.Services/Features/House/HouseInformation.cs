@@ -14,7 +14,7 @@ namespace SecurityPaymentControl.Services.Features.House
         public int HouseId { get; set; }
         public int BlockNumber { get; set; }
         public int HouseNumber { get; set; }
-        public int ResidentId { get; set; }
+        public string ResidentId { get; set; }
         public ResidentInformation ResidentInformation { get; set; }
 
     }

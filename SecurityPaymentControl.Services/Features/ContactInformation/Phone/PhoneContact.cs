@@ -14,7 +14,7 @@ namespace SecurityPaymentControl.Services.Features.Residents.ContactInformation.
         [Key]
         public string PhoneNumber { get; set; }
         public string CountryCode { get; set; }
-        public int ResidentId { get; set; }
+        public string ResidentId { get; set; }
 
         public ResidentInformation ResidentInformation { get; set; }
 

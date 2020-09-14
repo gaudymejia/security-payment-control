@@ -20,6 +20,16 @@ namespace SecurityPaymentControl.Services.Features.Residents
             _residentInformationService = residentInformationService;
 
         }
+
+        [Route("get-all-residents")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllResidents()
+        {
+            var message = await _residentInformationService.GetResidents();
+            return Ok(message);
+        }
+
+
         [Route("save-resident")]
         [HttpPost]
         public async Task<IActionResult> SaveResident([FromBody] ResidentRequest residentResquest)
