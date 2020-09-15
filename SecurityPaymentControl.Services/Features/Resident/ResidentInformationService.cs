@@ -8,6 +8,7 @@ using SecurityPaymentControl.Services.Features.House;
 using SecurityPaymentControl.Services.Features.Resident;
 using SecurityPaymentControl.Services.Features.Residents.ContactInformation.Phone;
 using SecurityPaymentControl.Services.Helpers;
+using SecurityPaymentControl.Services.Migrations;
 using SecurityPaymentControl.Services.Tools;
 using System;
 using System.Collections.Generic;
@@ -28,14 +29,62 @@ namespace SecurityPaymentControl.Services.Features.Residents
         public async Task<Response> GetResidents()
         {
             var getAllResidents = await _securityPaymentContext.ResidentInformation.ToListAsync();
-          
+
             if (getAllResidents.Any())
             {
-             
-                return new Response { Data = getAllResidents };
+                var residentsInformation = GetResidentsCompleteInformation(getAllResidents);
+                return new Response { Data = residentsInformation };
 
             }
             return new Response { Message = "Residents table is empty!" };
+        }
+
+        private List<ResidentRequest> GetResidentsCompleteInformation(List<ResidentInformation> getAllResidents)
+        {
+            var residentsCompleteInformationList = new List<ResidentRequest>();
+            foreach (var resident in getAllResidents)
+            {
+                HouseInformation houseInformation = GetHouseInformationByResidentId(resident.ResidentInformationId);
+                EmailContact emailContact = GetEmailContactByResidentId(resident.ResidentInformationId);
+                PhoneContact phoneContact = GetPhoneContactByResidentId(resident.ResidentInformationId);
+
+                var getResidentMaterializeObject = GetResidentMaterializeObject(resident, houseInformation, emailContact, phoneContact);
+                residentsCompleteInformationList.Add(getResidentMaterializeObject);
+            }
+            return residentsCompleteInformationList;
+        }
+
+        private ResidentRequest GetResidentMaterializeObject(ResidentInformation resident, HouseInformation houseInformation, EmailContact emailContact, PhoneContact phoneContact)
+        {
+            return new ResidentRequest()
+            {
+                ResidentInformationId = resident.ResidentInformationId,
+                Name = resident.Name,
+                LastName = resident.LastName,
+                PhoneNumber = phoneContact.PhoneNumber,
+                CountryCode = phoneContact.CountryCode,
+                Email = emailContact.Email,
+                HouseNumber = houseInformation.HouseNumber,
+                BlockNumber = houseInformation.BlockNumber
+            };
+        }
+
+        private HouseInformation GetHouseInformationByResidentId(string residentInformationId)
+        {
+            HouseInformation houseInformation = _securityPaymentContext.HouseInformation.ToList().FirstOrDefault(x => x.ResidentId == residentInformationId);
+            return houseInformation;
+        }
+
+        private EmailContact GetEmailContactByResidentId(string residentInformationId)
+        {
+            EmailContact emailContact = _securityPaymentContext.EmailContact.ToList().FirstOrDefault(x => x.ResidentId == residentInformationId);
+            return emailContact;
+        }
+
+        private PhoneContact GetPhoneContactByResidentId(string residentInformationId)
+        {
+            PhoneContact phoneContact = _securityPaymentContext.PhoneContact.ToList().FirstOrDefault(x => x.ResidentId == residentInformationId);
+            return phoneContact;
         }
 
         public async Task<Response> SaveResident(ResidentRequest residentResquest)

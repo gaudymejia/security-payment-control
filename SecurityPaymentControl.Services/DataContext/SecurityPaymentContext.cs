@@ -18,7 +18,10 @@ namespace SecurityPaymentControl.Services.DataContext
         public SecurityPaymentContext(DbContextOptions<SecurityPaymentContext> options) : base(options) { }
 
         public DbSet<ResidentInformation> ResidentInformation { get; set; }
-     
+        public DbSet<HouseInformation> HouseInformation { get; set; }
+        public DbSet<EmailContact> EmailContact { get; set; }
+        public DbSet<PhoneContact> PhoneContact { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
