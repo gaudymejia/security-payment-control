@@ -39,6 +39,7 @@ namespace SecurityPaymentControl.Services.Features.Residents
             return new Response { Message = "Residents table is empty!" };
         }
 
+
         private List<ResidentRequest> GetResidentsCompleteInformation(List<ResidentInformation> getAllResidents)
         {
             var residentsCompleteInformationList = new List<ResidentRequest>();
@@ -114,6 +115,38 @@ namespace SecurityPaymentControl.Services.Features.Residents
 
             }
             return new Response { Message = "Failed, the resident already exist!" };
+        }
+
+        public async Task<Response> DeleteResident(string residentId)
+        {
+            var getResidentDuplicated = _securityPaymentContext.ResidentInformation.ToList()
+               .Find(x => x.ResidentInformationId == residentId);
+
+            if (getResidentDuplicated != null)
+            {
+                ControlTransactionFields transactionInfo = TransactionInfo.GetTransactionInfo();
+
+                IDbContextTransaction transaction = _securityPaymentContext.Database.BeginTransaction();
+                var residentInformation = _securityPaymentContext.ResidentInformation.ToList().
+                    Find(x => x.ResidentInformationId == getResidentDuplicated.ResidentInformationId);
+                var phoneContact =_securityPaymentContext.PhoneContact.ToList().
+                    Find(x => x.ResidentId == getResidentDuplicated.ResidentInformationId);
+                var emailContact = _securityPaymentContext.EmailContact.ToList().
+                    Find(x => x.ResidentId == getResidentDuplicated.ResidentInformationId);
+                var houseInformation = _securityPaymentContext.HouseInformation.ToList().
+                    Find(x => x.ResidentId == getResidentDuplicated.ResidentInformationId);
+
+                 _securityPaymentContext.Remove<ResidentInformation>(residentInformation);
+                 _securityPaymentContext.Remove<PhoneContact>(phoneContact);
+                 _securityPaymentContext.Remove<EmailContact>(emailContact);
+                 _securityPaymentContext.Remove<HouseInformation>(houseInformation);
+
+                await _securityPaymentContext.SaveChangesAsync();
+                transaction.Commit();
+                return new Response { Data = "Status: Ok" };
+
+            }
+            return new Response { Message = "Failed, the resident not exists!" };
         }
 
         private HouseInformation MaterializeHouseInformation(ResidentRequest residentResquest, string residentId, ControlTransactionFields transactionInfo)

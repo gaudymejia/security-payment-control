@@ -38,6 +38,14 @@ namespace SecurityPaymentControl.Services.Features.Residents
             return Ok(message);
         }
 
+        [Route("delete-resident")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteResident(string residentId)
+        {
+            var message = await _residentInformationService.DeleteResident(residentId);
+            return Ok(message);
+        }
+
 
     }
 }
