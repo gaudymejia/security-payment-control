@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SecurityPaymentControl.Services.Features.Invoice;
+using SecurityPaymentControl.Services.Features.VoucherResident;
 using System;
 using System.Collections.Generic;
 using System.Linq;

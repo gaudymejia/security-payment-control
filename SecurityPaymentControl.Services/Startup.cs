@@ -14,7 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SecurityPaymentControl.Services.DataContext;
+using SecurityPaymentControl.Services.Features.Calendar;
 using SecurityPaymentControl.Services.Features.Residents;
+using SecurityPaymentControl.Services.Features.VoucherResident;
 
 namespace SecurityPaymentControl.Services
 {
@@ -69,6 +71,9 @@ namespace SecurityPaymentControl.Services
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<ResidentInformationService>();
+            services.AddScoped<VoucherService>();
+            services.AddScoped<PaymentCalendarService>();
+
 
             services.AddSwaggerGen(c =>
             {

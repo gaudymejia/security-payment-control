@@ -1,14 +1,15 @@
-﻿using System;
+﻿using SecurityPaymentControl.Services.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SecurityPaymentControl.Services.Features.Invoice
+namespace SecurityPaymentControl.Services.Features.VoucherResident
 {
-    public class Voucher
+    public class Voucher :ControlTransactionFields
     {
         public int VoucherId { get; set; }
-        public int ResidentId { get; set; }
+        public string ResidentId { get; set; }
         public DateTime PaymentDate { get; set; }
         public DateTime PaymentCalendarDate { get; set; }
         public decimal PaymentAmmount{ get; set; }
