@@ -22,6 +22,9 @@ namespace SecurityPaymentControl.Services.DataContext
         public DbSet<EmailContact> EmailContact { get; set; }
         public DbSet<PhoneContact> PhoneContact { get; set; }
 
+        public DbSet<Voucher> Voucher { get; set; }
+        public DbSet<PaymentCalendar> PaymentCalendar  { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
