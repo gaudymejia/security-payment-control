@@ -35,13 +35,12 @@ namespace SecurityPaymentControl.Services.Features.VoucherResident
         {
             var existResident = _securityPaymentContext.ResidentInformation.ToList().FirstOrDefault(c => c.ResidentInformationId == voucherRequest.ResidentId);
 
-            var voucherByResident = _securityPaymentContext.Voucher.ToList()
-                .Where(x => x.ResidentId == voucherRequest.ResidentId &&
-                x.PaymentCalendarDate.Year==voucherRequest.PaymentCalendarDate.Year &&
-                x.PaymentCalendarDate.Month == voucherRequest.PaymentCalendarDate.Month &&
-                x.PaymentCalendarDate.Day == voucherRequest.PaymentCalendarDate.Day);
+            var paymentCalendarConfigurationExist = _securityPaymentContext.PaymentCalendar.ToList()
+                .Where(x=> x.PaymentDate.Year==voucherRequest.PaymentCalendarDate.Year &&
+                x.PaymentDate.Month == voucherRequest.PaymentCalendarDate.Month &&
+                x.PaymentDate.Day == voucherRequest.PaymentCalendarDate.Day).ToList();
 
-            if (voucherByResident == null && existResident.ResidentInformationId==voucherRequest.ResidentId)
+            if (paymentCalendarConfigurationExist != null && existResident.ResidentInformationId==voucherRequest.ResidentId)
             {
                 ControlTransactionFields transactionInfo = TransactionInfo.GetTransactionInfo();
 
@@ -65,7 +64,8 @@ namespace SecurityPaymentControl.Services.Features.VoucherResident
                 ResidentId= voucherRequest.ResidentId,
                 PaymentCalendarDate = voucherRequest.PaymentCalendarDate,
                 PaymentDate= voucherRequest.PaymentDate,
-                PendingAmmount= voucherRequest.PendingAmmount,
+                PaymentAmmount = voucherRequest.PaymentAmmount,
+                PendingAmmount = voucherRequest.PendingAmmount,
                 TransactionDate = transactionInfo.TransactionDate,
                 ComputerName = transactionInfo.ComputerName,
                 UserTransaction = transactionInfo.UserTransaction
